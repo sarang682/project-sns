@@ -27,71 +27,71 @@ class UserServiceTest {
 
     @Test
     void 회원가입이_정상적으로_동작하는_경우() {
-        String username="username";
+        String userName="userName";
         String password="password";
 
         // mocking
-        when(userEntityRepository.findByUsername(username)).thenReturn(Optional.empty());
+        when(userEntityRepository.findByUserName(userName)).thenReturn(Optional.empty());
         when(encoder.encode(password)).thenReturn("encrypt_password");
-        when(userEntityRepository.save(any())).thenReturn(UserEntityFixture.get(username, password));
+        when(userEntityRepository.save(any())).thenReturn(UserEntityFixture.get(userName, password));
 
-        Assertions.assertDoesNotThrow(() -> userService.join(username, password));
+        Assertions.assertDoesNotThrow(() -> userService.join(userName, password));
     }
 
     @Test
     void 회원가입시_username으로_회원가입한_유저가_이미_있는_경우() {
-        String username="username";
+        String userName="userName";
         String password="password";
 
-        UserEntity fixture = UserEntityFixture.get(username, password);
+        UserEntity fixture = UserEntityFixture.get(userName, password);
 
         // mocking
-        when(userEntityRepository.findByUsername(username)).thenReturn(Optional.of(fixture));
+        when(userEntityRepository.findByUserName(userName)).thenReturn(Optional.of(fixture));
         when(encoder.encode(password)).thenReturn("encrypt_password");
-        when(userEntityRepository.save(any())).thenReturn(UserEntityFixture.get(username,password));
+        when(userEntityRepository.save(any())).thenReturn(UserEntityFixture.get(userName,password));
 
-        SnsApplicationException e = Assertions.assertThrows(SnsApplicationException.class, () -> userService.join(username, password));
+        SnsApplicationException e = Assertions.assertThrows(SnsApplicationException.class, () -> userService.join(userName, password));
         Assertions.assertEquals(ErrorCode.DUPLICATED_USER_NAME,e.getErrorCode());
     }
 
     @Test
     void 로그인이_정상적으로_동작하는_경우() {
-        String username="username";
+        String userName="userName";
         String password="password";
 
-        UserEntity fixture = UserEntityFixture.get(username, password);
+        UserEntity fixture = UserEntityFixture.get(userName, password);
 
         // mocking
-        when(userEntityRepository.findByUsername(username)).thenReturn(Optional.of(fixture));
+        when(userEntityRepository.findByUserName(userName)).thenReturn(Optional.of(fixture));
         when(encoder.matches(password, fixture.getPassword())).thenReturn(true);
 
-        Assertions.assertDoesNotThrow(() -> userService.login(username, password));
+        Assertions.assertDoesNotThrow(() -> userService.login(userName, password));
     }
 
     @Test
     void 로그인시_username으로_회원가입한_유저가_없는_경우() {
-        String username="username";
+        String userName="userName";
         String password="password";
 
         // mocking
-        when(userEntityRepository.findByUsername(username)).thenReturn(Optional.empty());
+        when(userEntityRepository.findByUserName(userName)).thenReturn(Optional.empty());
 
-        SnsApplicationException e = Assertions.assertThrows(SnsApplicationException.class, () -> userService.login(username, password));
+        SnsApplicationException e = Assertions.assertThrows(SnsApplicationException.class, () -> userService.login(userName, password));
         Assertions.assertEquals(ErrorCode.USER_NOT_FOUND,e.getErrorCode());
     }
 
     @Test
     void 로그인시_패스워드가_틀린_경우() {
-        String username="username";
+        String userName="userName";
         String password="password";
         String wrongPassword="wrongPassword";
 
-        UserEntity fixture = UserEntityFixture.get(username, password);
+        UserEntity fixture = UserEntityFixture.get(userName, password);
 
         // mocking
-        when(userEntityRepository.findByUsername(username)).thenReturn(Optional.of(fixture));
+        when(userEntityRepository.findByUserName(userName)).thenReturn(Optional.of(fixture));
 
-        SnsApplicationException e = Assertions.assertThrows(SnsApplicationException.class, () -> userService.login(username, wrongPassword));
+        SnsApplicationException e = Assertions.assertThrows(SnsApplicationException.class, () -> userService.login(userName, wrongPassword));
         Assertions.assertEquals(ErrorCode.INVALID_PASSWORD,e.getErrorCode());
     }
 

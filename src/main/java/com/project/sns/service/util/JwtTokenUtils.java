@@ -11,9 +11,9 @@ import java.util.Date;
 
 public class JwtTokenUtils {
 
-    public static String generateToken(String username, String key, long expiredTimeMs){
+    public static String generateToken(String userName, String key, long expiredTimeMs){
         Claims claims = Jwts.claims();
-        claims.put("username",username);
+        claims.put("userName",userName);
 
         return Jwts.builder()
                 .setClaims(claims)

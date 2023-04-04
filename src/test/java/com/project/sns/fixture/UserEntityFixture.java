@@ -3,10 +3,10 @@ import com.project.sns.model.entity.UserEntity;
 
 public class UserEntityFixture {
 
-    public static UserEntity get(String username, String password) {
+    public static UserEntity get(String userName, String password) {
         UserEntity result=new UserEntity();
         result.setId(1);
-        result.setUsername(username);
+        result.setUserName(userName);
         result.setPassword(password);
 
         return result;
