@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class User {
     private Integer id;
-    private String username;
+    private String userName;
     private String password;
     private UserRole userRole;
     private Timestamp registeredAt;
@@ -20,7 +20,7 @@ public class User {
     public static User fromEntity(UserEntity entity) {
         return new User(
                 entity.getId(),
-                entity.getUsername(),
+                entity.getUserName(),
                 entity.getPassword(),
                 entity.getRole(),
                 entity.getRegisteredAt(),
