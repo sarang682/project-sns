@@ -6,8 +6,8 @@ spring.jpa:
 
 spring.datasource:
   hikari.maxium-pool-size: 4
-  url: jdbc:postgresql://ec2-3-208-74-199.compute-1.amazonaws.com
-  username: utgdrvrfkfmzwh
-  password: d754642d99148bfcab80cc3965b0078aa8fd807a37d5dcdf033fa4d9161f1bb0
+  url: jdbc:postgresql://ec2-3-208-74-199.compute-1.amazonaws.com/d4jqckjdq9po17
+  username: elvqzflyayucuh
+  password: 1e5f3616f90462c162720469b5b4abc726dd1fcb10fbe5251f626d6d00a8c75f
   platform: postgres
   driver-class-name: org.postgresql.Driver
