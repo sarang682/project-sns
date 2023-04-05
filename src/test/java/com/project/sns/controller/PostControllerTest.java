@@ -2,10 +2,12 @@ package com.project.sns.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.sns.controller.request.PostCreateRequest;
+import com.project.sns.service.PostService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -22,6 +24,7 @@ class PostControllerTest {
 
     @Autowired private MockMvc mockMvc;
     @Autowired private ObjectMapper objectMapper;
+    @MockBean private PostService postService;
 
     @Test
     @WithMockUser

@@ -46,7 +46,7 @@ class PostServiceTest {
         String userName = "userName";
 
         // mocking
-        when(userEntityRepository.findByUserName(userName)).thenReturn(Optional.of(mock(UserEntity.class)));
+        when(userEntityRepository.findByUserName(userName)).thenReturn(Optional.empty());
         when(postEntityRepository.save(any())).thenReturn(mock(PostEntity.class));
 
         SnsApplicationException e = assertThrows(SnsApplicationException.class, () -> postService.create(title, body, userName));
