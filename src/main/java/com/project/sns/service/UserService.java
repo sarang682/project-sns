@@ -7,6 +7,7 @@ import com.project.sns.model.entity.UserEntity;
 import com.project.sns.repository.UserEntityRepository;
 import com.project.sns.service.util.JwtTokenUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +20,18 @@ public class UserService {
     private final UserEntityRepository userEntityRepository;
     private final BCryptPasswordEncoder encoder;
 
-    private static String secretKey="project.sns-application-2023.secret_key";
-    private static Long expiredTimeMs= 2592000000L;
+    @Value("${jwt.secret-key}")
+    private String secretKey;
+
+    @Value("${jwt.token.expired-time-ms}")
+    private Long expiredTimeMs;
+
+
+    public User loadUserByUserName(String userName) {
+        return userEntityRepository.findByUserName(userName).map(User::fromEntity).orElseThrow(()->
+                new SnsApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not found",userName))
+        );
+    }
 
     @Transactional
     public User join(String userName, String password) {
