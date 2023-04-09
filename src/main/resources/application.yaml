@@ -1,6 +1,6 @@
 spring.jpa:
   database: postgresql
-  hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+  hibernate.dialect: org.hibernate.dialect.PostgresSQLDialect
   hibernate.ddl-auto: update
   show-sql: true
 
