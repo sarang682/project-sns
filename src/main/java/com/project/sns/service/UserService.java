@@ -2,8 +2,10 @@ package com.project.sns.service;
 
 import com.project.sns.exception.ErrorCode;
 import com.project.sns.exception.SnsApplicationException;
+import com.project.sns.model.Alarm;
 import com.project.sns.model.User;
 import com.project.sns.model.entity.UserEntity;
+import com.project.sns.repository.AlarmEntityRepository;
 import com.project.sns.repository.UserEntityRepository;
 import com.project.sns.service.util.JwtTokenUtils;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserEntityRepository userEntityRepository;
+    private final AlarmEntityRepository alarmEntityRepository;
     private final BCryptPasswordEncoder encoder;
 
     @Value("${jwt.secret-key}")
@@ -62,7 +65,9 @@ public class UserService {
         return token;
     }
 
-    public Page<Void> alarmList(String userName, Pageable pageable) {
-        return Page.empty();
+    public Page<Alarm> alarmList(String userName, Pageable pageable) {
+        UserEntity userEntity = userEntityRepository.findByUserName(userName).orElseThrow(() -> new SnsApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s is not found",userName)));
+        return alarmEntityRepository.findAllByUser(userEntity,pageable).map(Alarm::fromEntity);
     }
+
 }
